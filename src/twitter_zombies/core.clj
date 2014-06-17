@@ -1,6 +1,7 @@
 (ns twitter-zombies.core
-  (:use [twitter-zombies.oauth :as zombie-auth]))
+  (:require [twitter-zombies.twitter :as twitter]))
 
 (defn -main
   [& args]
-  (println (zombie-auth/get-creds)))
+  (do (twitter/tweet "Twitter/tweet function call test.")
+  (System/exit 0)))
