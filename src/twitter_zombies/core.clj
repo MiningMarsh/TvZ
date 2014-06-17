@@ -1,7 +1,6 @@
 (ns twitter-zombies.core
-  (:use (twitter-zombies [config])))
+  (:use (twitter-zombies [oauth])))
 
 (defn -main
   [& args]
-  (println (get-consumer-secret))
-  (println (get-consumer-secret)))
+  (println (get-creds)))

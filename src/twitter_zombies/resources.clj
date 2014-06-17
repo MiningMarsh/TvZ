@@ -1,11 +1,9 @@
 (ns twitter-zombies.resources
   (:require [clojure.java.io :as io]))
 
-(defn slurp-resource [resource-file]
-  "Returns the contents of a resource file as a string."
-  (-> 
-    resource-file
+(defn resource-file [^String path]
+  "Returns the full path of a resource."
+  (->
+    path
     io/resource
-    io/file 
-    slurp))
-
+	io/file))

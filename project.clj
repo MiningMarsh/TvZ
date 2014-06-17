@@ -5,4 +5,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main twitter-zombies.core
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [twitter-api "0.7.5"]])
+                 [twitter-api "0.7.5"]
+                 [clojure-ini "0.0.2"]])
