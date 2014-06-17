@@ -4,6 +4,6 @@
 (defn resource-file [^String path]
   "Returns the full path of a resource."
   (->
-    path
-    io/resource
-	io/file))
+   path
+   io/resource
+   io/file))
