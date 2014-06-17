@@ -1,6 +1,6 @@
 (ns twitter-zombies.core
-  (:use (twitter-zombies [oauth])))
+  (:use [twitter-zombies.oauth :as zombie-auth]))
 
 (defn -main
   [& args]
-  (println (get-creds)))
+  (println (zombie-auth/get-creds)))

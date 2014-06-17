@@ -4,6 +4,7 @@
     [twitter.callbacks]
     [twitter.callbacks.handlers]
     [twitter.api.restful]))
+
 (defn get-creds
   "Returns the OAuth creds for the account specified in the conf.ini"
   []
