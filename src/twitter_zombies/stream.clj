@@ -11,22 +11,22 @@
     {:input input :output output}))
 
 (defn create-json-processor [input-chan]
-  ; Bind input and output to the stream endpoints
+                                        ; Bind input and output to the stream endpoints
   (let [{input :input output :output} (create-stream) 
-		; Create the output channel with a buffer of 100 json objects
+                                        ; Create the output channel with a buffer of 100 json objects
         output-chan (async/chan 100)]  
-	; Loop over each incoming and push to buffer
-    (async/go (loop [val (str (async/<! input-chan))] 
-				; write to input stream
-                (.write input val) 
-				; recur on the next packet
-                (recur (str (async/<! input-chan))))) 
+                                        ; Loop over each incoming and push to buffer
+    (async/go-loop [val (str (async/<! input-chan))] 
+                                        ; write to input stream
+      (.write input val) 
+                                        ; recur on the next packet
+      (recur (str (async/<! input-chan)))) 
     (async/go-loop []                                                 
-	  ; Parse the full json packet 
+                                        ; Parse the full json packet 
       (let [val (json/read output :key-fn keyword)] 
-		; push it to the output channel
+                                        ; push it to the output channel
         (async/>! output-chan val) 
-		; recurse
+                                        ; recurse
         (recur))) 
-	; return the output channel
+                                        ; return the output channel
     output-chan)) 
