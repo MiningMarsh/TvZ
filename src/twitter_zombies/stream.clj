@@ -10,23 +10,25 @@
         input (PipedWriter. output)] ; written ro PipedWriter.
     {:input input :output output}))
 
-(defn create-json-processor [input-chan]
-                                        ; Bind input and output to the stream endpoints
+(defn create-json-processor 
+  "Takes an input channel of strings and parses the json incrementally pushing to output-chan"
+  [input-chan]
   (let [{input :input output :output} (create-stream) 
-                                        ; Create the output channel with a buffer of 100 json objects
+                                        ; Bind input and output to the stream endpoints
         output-chan (async/chan 100)]  
-                                        ; Loop over each incoming and push to buffer
+                                        ; Create the output channel with a buffer of 100 json objects
     (async/go-loop [val (str (async/<! input-chan))] 
-                                        ; write to input stream
+                                        ; Loop over each incoming and push to buffer
       (.write input val) 
-                                        ; recur on the next packet
+                                        ; write to input stream
       (recur (str (async/<! input-chan)))) 
     (async/go-loop []                                                 
-                                        ; Parse the full json packet 
+                                        ; recur on the next packet
       (let [val (json/read output :key-fn keyword)] 
                                         ; push it to the output channel
         (async/>! output-chan val) 
-                                        ; recurse
+                                        ; Parse the full json packet 
         (recur))) 
-                                        ; return the output channel
+                                        ; recurse
     output-chan)) 
+                                        ; return the output channel
