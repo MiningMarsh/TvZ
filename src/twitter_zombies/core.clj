@@ -10,3 +10,9 @@
 
 (def random-text 
   (mc/add-text {} (slurp (res/resource-file "stallman.txt"))))
+
+(defn random-tweet [g]
+  (let [twt (atom (mc/random-walk g))]
+    (while (> (count @twt) 140)
+      (swap! twt (fn [x] (mc/random-walk g))))
+    @twt))

@@ -8,7 +8,7 @@
 (defn tweet
   "Tweets a message."
   [^String message]
-  (let [message (if (> (count message) 140)
+  (let [message (if (>= (count message) 140)
                 (subs message 0 139)
 		        message)]
     (statuses-update :oauth-creds (get-creds) :params {:status message})))
