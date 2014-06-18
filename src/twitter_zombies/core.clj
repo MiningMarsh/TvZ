@@ -4,9 +4,9 @@
             [twitter-zombies.resources :as res]))
 
 (defn -main
+  "Right now we just exit."
   [& args]
-  (do (twitter/tweet "Twitter/tweet function call test. 11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
-      (System/exit 0)))
+  (System/exit 0))
 
 (def random-text 
   (mc/add-text {} (slurp (res/resource-file "stallman.txt"))))

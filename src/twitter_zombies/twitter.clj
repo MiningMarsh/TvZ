@@ -5,7 +5,7 @@
             [twitter.callbacks.handlers]
             [twitter.api.restful]))
 
-(defn tweet
+(defn send
   "Tweets a message."
   [^String message]
   (let [message (if (>= (count message) 140)
