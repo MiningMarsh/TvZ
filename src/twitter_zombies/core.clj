@@ -3,23 +3,20 @@
         [twitter.callbacks]
         [twitter.callbacks.handlers]
         [twitter.api.streaming]
-		[twitter-zombies.oauth]
-		[twitter-zombies.twitter.callback])
+        [twitter-zombies.oauth]
+        [twitter-zombies.twitter.callback])
+  (:require [twitter-zombies.twitter :as twitter])
   (:import (twitter.callbacks.protocols AsyncStreamingCallback)))
-
-(def ^:dynamic
-  *custom-streaming-callback*
-  (AsyncStreamingCallback. (callback-factory (comp println 
-                                                   #(str (:screen_name (get % 0)) ": " (get % 1))
-                                                   (juxt :user :text)))
-                           (comp println response-return-everything)
-                           exception-print))
-
-
 
 (defn -main
   "Print all incoming tweets from search."
   [& args]
-  (statuses-filter :params {:track (first args)}
-                   :oauth-creds (get-creds)
-                   :callbacks *custom-streaming-callback*))
+  (twitter/reduce-tweets
+    (fn [acc x]
+      (print (:screen_name (:user x)))
+      (print ": ")
+      (println (:text x))
+      (println "--------------------------------------------")
+      [true true])
+	(first args)
+	true))
