@@ -25,13 +25,18 @@
       (swap! twt (fn [x] (mc/random-walk g))))
     @twt))
 
-; supply a callback that only prints the text of the status
+                                        ; supply a callback that only prints the text of the status
 (def ^:dynamic
-     *custom-streaming-callback*
-     (AsyncStreamingCallback. (comp println #(:text %) json/read-json #(str %2))
-                      (comp println response-return-everything)
-                  exception-print))
+  *custom-streaming-callback*
+  (AsyncStreamingCallback. (fn [_ x & a] (try
+                                           (println (-> x
+                                                        str
+                                                        json/read-json
+                                                        :text))
+                                           (catch Exception e (println (str e "\n" x)))))
+                           (comp println response-return-everything)
+                           exception-print))
 
-(statuses-filter :params {:track "Borat"}
-         :oauth-creds (get-creds)
-         :callbacks *custom-streaming-callback*)
+(statuses-filter :params {:track "yolo"}
+                 :oauth-creds (get-creds)
+                 :callbacks *custom-streaming-callback*)
