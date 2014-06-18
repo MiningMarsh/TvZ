@@ -76,7 +76,7 @@
 (defn -main
   "Right now we just exit."
   [& args]
-  (let [yolo-chan (:tweets (init-chans "yolo"))]
+  (let [yolo-chan (:tweets (init-chans "fox"))]
     (while true
       (println (:text (<!! yolo-chan))))))
 
