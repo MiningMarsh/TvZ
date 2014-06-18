@@ -10,7 +10,7 @@
 (def ^:dynamic
   *custom-streaming-callback*
   (AsyncStreamingCallback. (callback-factory (comp println 
-                                                   #(str (:name (get % 0)) ": " (get % 1))
+                                                   #(str (:screen_name (get % 0)) ": " (get % 1))
                                                    (juxt :user :text)))
                            (comp println response-return-everything)
                            exception-print))
