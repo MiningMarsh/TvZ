@@ -13,6 +13,6 @@
 
 (defn random-tweet [g n]
   (let [twt (atom (mc/random-walk g))]
-    (while (> (count @twt) n)
+    (while (or (= (count @twt) 0) (> (count @twt) n))
       (swap! twt (fn [x] (mc/random-walk g))))
     @twt))
