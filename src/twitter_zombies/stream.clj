@@ -11,7 +11,8 @@
     {:input input :output output}))
 
 (defn create-json-processor 
-  "Takes an input channel of strings and parses the json incrementally pushing to output-chan"
+  "Takes an input channel of strings and parses the json incrementally
+  pushing to output-chan" 
   [input-chan]
   (let [{input :input output :output} (create-stream) 
                                         ; Bind input and output to the stream endpoints
@@ -32,3 +33,23 @@
                                         ; recurse
     output-chan)) 
                                         ; return the output channel
+
+
+(defn callback-factory
+  "Generates a callback function that will parse incoming packets and
+  push them to the function f"
+  [f]
+  (let [input-chan (async/chan)
+                                        ; Create the input channel
+        output-chan (create-json-processor input-chan)]
+                                        ; Parsed json out
+    (async/go-loop [tweet (async/<! output-chan)]
+                                        ; Bind the tweet to a paramter
+      (f tweet)
+                                        ; parse it
+      (recur (async/<! output-chan)))
+                                        ; recurse on the next tweet
+    (fn [_ tweet-packet & args]
+                                        ; The function that acts as a handler
+      (async/>!! input-chan tweet-packet))))
+                                        ; push the packet to the input-stream
