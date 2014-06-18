@@ -18,5 +18,5 @@
       (println (:text x))
       (println "--------------------------------------------")
       [true true])
-	(first args)
-	true))
+    true
+    (first args)))
