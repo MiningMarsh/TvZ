@@ -6,8 +6,10 @@
 
 
 (defn create-stream []
-  (let [output (PipedReader.)        ; PipedReader reads input
-        input (PipedWriter. output)] ; written ro PipedWriter.
+  (let [output (PipedReader.)        
+                                        ; PipedReader reads input
+        input (PipedWriter. output)]
+                                        ; written ro PipedWriter.
     {:input input :output output}))
 
 (defn create-json-processor 
