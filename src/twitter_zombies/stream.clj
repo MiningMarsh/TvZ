@@ -55,3 +55,6 @@
                                         ; The function that acts as a handler
       (async/>!! input-chan tweet-packet))))
                                         ; push the packet to the input-stream
+
+(defn print-callback []
+  (callback-factory (comp println :text)))
