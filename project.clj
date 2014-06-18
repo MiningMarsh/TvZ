@@ -7,5 +7,5 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [twitter-api "0.7.5"]
                  [clojure-ini "0.0.2"]
-                 [cheshire "5.3.1"]
+                 [org.clojure/data.json "0.2.5"]
                  [org.clojure/core.async "0.1.303.0-886421-alpha"]])
